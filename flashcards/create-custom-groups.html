@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Custom Groups — Knowledge Check</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { perspective: 1000px; height: 150px; cursor: pointer; }
+  .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+  .card.flipped .card-inner { transform: rotateY(180deg); }
+  .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .front { background: #1A6AFF; }
+  .front p { color: white; font-weight: 700; font-size: 13px; text-align: center; line-height: 1.5; }
+  .back { background: #ffffff; border: 2px solid #1A6AFF; transform: rotateY(180deg); }
+  .back p { color: #1a1a2e; font-size: 13px; text-align: center; line-height: 1.5; }
+  .back p strong { color: #1A6AFF; }
+  .hint { font-size: 11px; color: #718096; text-align: center; margin-top: 12px; }
+</style>
+</head>
+<body>
+  <h2>Knowledge Check</h2>
+  <p class="sub">Select each card to flip and reveal the answer.</p>
+  <div class="grid">
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>Where do you go to create a Custom Group in Hub?</p></div>
+        <div class="back"><p><strong>Profiles</strong> → <strong>Custom Groups</strong> tab → <strong>Add Custom Group</strong> (top right)</p></div>
+      </div>
+    </div>
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>What happens when you add a user type to a custom group?</p></div>
+        <div class="back"><p>New users added to that type are <strong>automatically added</strong>. Removed users are <strong>automatically removed</strong>.</p></div>
+      </div>
+    </div>
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>What does checking "All Team Users Only" do?</p></div>
+        <div class="back"><p>Restricts visibility to <strong>administrators only</strong>. Uncheck to allow all users to see the group.</p></div>
+      </div>
+    </div>
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>Who can access the "All Teams" option when creating a group?</p></div>
+        <div class="back"><p>Only users with <strong>All Teams access</strong> AND the <strong>Manage Users and Groups</strong> permission.</p></div>
+      </div>
+    </div>
+  </div>
+  <p class="hint">Click again to flip back.</p>
+</body>
+</html>
