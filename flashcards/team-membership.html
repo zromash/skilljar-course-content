@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Membership — Knowledge Check</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { perspective: 1000px; height: 170px; cursor: pointer; }
+  .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+  .card.flipped .card-inner { transform: rotateY(180deg); }
+  .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .front { background: #1A6AFF; }
+  .front p { color: white; font-weight: 700; font-size: 13px; text-align: center; line-height: 1.5; }
+  .back { background: #ffffff; border: 2px solid #1A6AFF; transform: rotateY(180deg); }
+  .back p { color: #1a1a2e; font-size: 13px; text-align: center; line-height: 1.5; }
+  .back p strong { color: #1A6AFF; }
+  .hint { font-size: 11px; color: #718096; text-align: center; margin-top: 12px; }
+</style>
+</head>
+<body>
+  <h2>Knowledge Check</h2>
+  <p class="sub">Select each card to flip and reveal the answer.</p>
+  <div class="grid">
+
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>James is on the football team only. There's a custom group for football team members. James gets removed from the football team. What happens to his group membership?</p></div>
+        <div class="back"><p>James is <strong>removed from the custom group</strong> — his membership was tied to his football team affiliation.</p></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>Kevin is on football AND basketball. The "Captains" group spans both teams. Kevin is removed from football only. Is he removed from Captains?</p></div>
+        <div class="back"><p><strong>No</strong> — Kevin stays in Captains because he's still on basketball. He'd only be removed if removed from <strong>both</strong> teams.</p></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>A custom group uses the "All Teams" option. An athlete is removed from one of their teams. Are they removed from the group?</p></div>
+        <div class="back"><p><strong>No</strong> — All Teams groups include users across all teams. Removal from one team doesn't affect membership unless they leave all teams.</p></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>A custom group spans Team A and Team B. A new athlete joins Team A. Are they automatically added to the group?</p></div>
+        <div class="back"><p><strong>Yes</strong> — if the group was built using the athlete <strong>user type</strong>, new athletes added to Team A are automatically included.</p></div>
+      </div>
+    </div>
+
+  </div>
+  <p class="hint">Click again to flip back.</p>
+</body>
+</html>
