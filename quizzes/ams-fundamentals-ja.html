@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teamworks AMS ファンダメンタルズ — ナレッジチェック</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #f8fafc;
+    padding: 20px;
+    color: #1a1a2e;
+  }
+  .quiz-header { margin-bottom: 20px; }
+  .quiz-header h2 { font-size: 16px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .quiz-header p { font-size: 13px; color: #718096; }
+  .progress-bar-wrap { background: #e2e8f0; border-radius: 999px; height: 6px; margin-bottom: 20px; }
+  .progress-bar { background: #1A6AFF; border-radius: 999px; height: 6px; transition: width 0.4s ease; }
+  .question-block { display: none; }
+  .question-block.active { display: block; }
+  .question-num { font-size: 11px; font-weight: 700; color: #1A6AFF; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .question-text { font-size: 15px; font-weight: 600; color: #1a1a2e; margin-bottom: 16px; line-height: 1.5; }
+  .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .option {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    color: #1a1a2e;
+    transition: border-color 0.2s, background 0.2s;
+    line-height: 1.4;
+  }
+  .option:hover:not(:disabled) { border-color: #1A6AFF; background: #f0f5ff; }
+  .option.correct { border-color: #009657; background: #E7F3EF; color: #006b3f; font-weight: 600; }
+  .option.incorrect { border-color: #e53e3e; background: #fff5f5; color: #c53030; }
+  .option.reveal { border-color: #009657; background: #E7F3EF; color: #006b3f; }
+  .option:disabled { cursor: default; }
+  .explanation {
+    display: none;
+    background: #E8F0FF;
+    border: 1px solid #1A6AFF;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: #1a1a2e;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .explanation.show { display: block; }
+  .btn-next {
+    background: #1A6AFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: none;
+    font-family: inherit;
+  }
+  .btn-next.show { display: inline-block; }
+  .btn-next:hover { background: #1558d6; }
+  .result-screen { display: none; text-align: center; padding: 20px 10px; }
+  .result-screen.show { display: block; }
+  .result-score { font-size: 42px; font-weight: 700; color: #1A6AFF; margin-bottom: 8px; }
+  .result-label { font-size: 15px; color: #4a5568; margin-bottom: 20px; }
+  .result-message { font-size: 14px; color: #1a1a2e; background: #E7F3EF; border: 1px solid #009657; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; line-height: 1.5; }
+  .btn-retry {
+    background: #ffffff;
+    color: #1A6AFF;
+    border: 2px solid #1A6AFF;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-retry:hover { background: #f0f5ff; }
+</style>
+</head>
+<body>
+
+<div class="quiz-header">
+  <h2>ナレッジチェック</h2>
+  <p>各質問に答えて、理解度を確認しましょう。</p>
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+</div>
+
+<!-- Q1 -->
+<div class="question-block active" id="q1">
+  <div class="question-num">問題 1 / 6</div>
+  <div class="question-text">AMSには何種類のインターフェースがありますか？</div>
+  <div class="options">
+    <button class="option" onclick="answer(this, false, 'q1')">2種類</button>
+    <button class="option" onclick="answer(this, true, 'q1')">3種類</button>
+    <button class="option" onclick="answer(this, false, 'q1')">4種類</button>
+    <button class="option" onclick="answer(this, false, 'q1')">5種類</button>
+  </div>
+  <div class="explanation" id="exp1">AMSには3つのインターフェースがあります：メイン/パーソナルサイト（日常的なデータ入力・閲覧）、ビルダー（フォームとダッシュボードの作成）、管理（ユーザーアカウントと権限の管理）です。</div>
+  <button class="btn-next" id="next1" onclick="nextQuestion(1)">次の問題 →</button>
+</div>
+
+<!-- Q2 -->
+<div class="question-block" id="q2">
+  <div class="question-num">問題 2 / 6</div>
+  <div class="question-text">ビルダーインターフェースにアクセスするURLはどれですか？</div>
+  <div class="options">
+    <button class="option" onclick="answer(this, false, 'q2')">yoursitename/admin</button>
+    <button class="option" onclick="answer(this, true, 'q2')">yoursitename/builder</button>
+    <button class="option" onclick="answer(this, false, 'q2')">yoursitename/forms</button>
+    <button class="option" onclick="answer(this, false, 'q2')">yoursitename/dashboard</button>
+  </div>
+  <div class="explanation" id="exp2">ビルダーインターフェースには <strong>yoursitename/builder</strong> でアクセスします。管理インターフェースは <strong>yoursitename/admin</strong> です。</div>
+  <button class="btn-next" id="next2" onclick="nextQuestion(2)">次の問題 →</button>
+</div>
+
+<!-- Q3 -->
+<div class="question-block" id="q3">
+  <div class="question-num">問題 3 / 6</div>
+  <div class="question-text">AMSにおいて「グループ」は何を制御しますか？</div>
+  <div class="options">
+    <button class="option" onclick="answer(this, false, 'q3')">ユーザーがアクセスできるフォームとダッシュボード</button>
+    <button class="option" onclick="answer(this, true, 'q3')">ユーザーがサイト上でアクセスできる対象者</button>
+    <button class="option" onclick="answer(this, false, 'q3')">パスワードの複雑さの要件</button>
+    <button class="option" onclick="answer(this, false, 'q3')">ダッシュボードのレイアウトデザイン</button>
+  </div>
+  <div class="explanation" id="exp3">グループはユーザーがサイト上でアクセスできる対象者を制御します。例えば、コーチは自分のグループ内のアスリートのデータを閲覧・入力でき、アスリートは自分のデータのみアクセスできます。フォームやダッシュボードへのアクセスはロールが制御します。</div>
+  <button class="btn-next" id="next3" onclick="nextQuestion(3)">次の問題 →</button>
+</div>
+
+<!-- Q4 -->
+<div class="question-block" id="q4">
+  <div class="question-num">問題 4 / 6</div>
+  <div class="question-text">多要素認証（MFA）コードの提供方法として、正しくないものはどれですか？</div>
+  <div class="options">
+    <button class="option" onclick="answer(this, false, 'q4')">メール</button>
+    <button class="option" onclick="answer(this, false, 'q4')">テキストメッセージ</button>
+    <button class="option" onclick="answer(this, false, 'q4')">認証アプリ</button>
+    <button class="option" onclick="answer(this, true, 'q4')">生体認証（指紋）</button>
+  </div>
+  <div class="explanation" id="exp4">AMSのMFAコードはメール、テキストメッセージ、認証アプリの3つの方法で提供できます。生体認証はAMSのMFAオプションには含まれていません。</div>
+  <button class="btn-next" id="next4" onclick="nextQuestion(4)">次の問題 →</button>
+</div>
+
+<!-- Q5 -->
+<div class="question-block" id="q5">
+  <div class="question-num">問題 5 / 6</div>
+  <div class="question-text">Teamworksが取得・維持しているセキュリティ認定として正しいものはどれですか？</div>
+  <div class="options">
+    <button class="option" onclick="answer(this, false, 'q5')">PCI DSS Level 1</button>
+    <button class="option" onclick="answer(this, true, 'q5')">ISO/IEC 27001:2013</button>
+    <button class="option" onclick="answer(this, false, 'q5')">ISO/IEC 9001:2015</button>
+    <button class="option" onclick="answer(this, false, 'q5')">HIPAA認定</button>
+  </div>
+  <div class="explanation" id="exp5">TeamworksはISO/IEC 27001:2013、ISO/IEC 27701:2019、SOC タイプ1およびタイプ2の認定を維持しています。これらは情報セキュリティ管理の国際標準です。</div>
+  <button class="btn-next" id="next5" onclick="nextQuestion(5)">次の問題 →</button>
+</div>
+
+<!-- Q6 -->
+<div class="question-block" id="q6">
+  <div class="question-num">問題 6 / 6</div>
+  <div class="question-text">次のAMSの仕組みを正しい順序に並べたものはどれですか？</div>
+  <div class="options">
+    <button class="option" onclick="answer(this, false, 'q6')">ビルダーがフォームを作成 → 管理者がアカウントを設定 → アスリートとコーチが使用</button>
+    <button class="option" onclick="answer(this, true, 'q6')">管理者がアカウントを設定 → ビルダーがフォームを作成 → アスリートとコーチが使用</button>
+    <button class="option" onclick="answer(this, false, 'q6')">アスリートとコーチが登録 → 管理者が確認 → ビルダーがカスタマイズ</button>
+    <button class="option" onclick="answer(this, false, 'q6')">ビルダーがサイトを設計 → アスリートが登録 → 管理者が権限を付与</button>
+  </div>
+  <div class="explanation" id="exp6">正しい順序は、①管理者がユーザーアカウントを作成しグループとロールに割り当てる、②ビルダーがユーザーに必要なフォームやダッシュボードを作成する、③アスリートとコーチがこれらを日々活用してパフォーマンスを追跡・管理する、です。</div>
+  <button class="btn-next" id="next6" onclick="showResult()">結果を見る →</button>
+</div>
+
+<!-- Result -->
+<div class="result-screen" id="resultScreen">
+  <div class="result-score" id="resultScore"></div>
+  <div class="result-label">正解数 / 全6問</div>
+  <div class="result-message" id="resultMessage"></div>
+  <button class="btn-retry" onclick="retryQuiz()">もう一度挑戦する</button>
+</div>
+
+<script>
+  var score = 0;
+  var current = 1;
+  var total = 6;
+  var answered = {};
+
+  function answer(btn, isCorrect, qId) {
+    if (answered[qId]) return;
+    answered[qId] = true;
+
+    var options = btn.parentElement.querySelectorAll('.option');
+    options.forEach(function(o) { o.disabled = true; });
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      score++;
+    } else {
+      btn.classList.add('incorrect');
+      options.forEach(function(o) {
+        if (o.onclick.toString().includes('true')) o.classList.add('reveal');
+      });
+    }
+
+    document.getElementById('exp' + qId.replace('q','')).classList.add('show');
+    document.getElementById('next' + qId.replace('q','')).classList.add('show');
+    updateProgress();
+  }
+
+  function nextQuestion(num) {
+    document.getElementById('q' + num).classList.remove('active');
+    current = num + 1;
+    document.getElementById('q' + current).classList.add('active');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    var pct = (Object.keys(answered).length / total) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  function showResult() {
+    document.getElementById('q6').classList.remove('active');
+    document.getElementById('progressBar').style.width = '100%';
+    document.getElementById('resultScore').textContent = score + ' / ' + total;
+
+    var msg;
+    if (score === total) {
+      msg = '満点です！AMSファンダメンタルズの内容を完全に理解しています。';
+    } else if (score >= 4) {
+      msg = 'よくできました！AMSの基本をしっかり理解しています。間違えた問題を復習してみましょう。';
+    } else {
+      msg = 'もう少し復習が必要です。コースの内容を見直してから再チャレンジしてみましょう。';
+    }
+    document.getElementById('resultMessage').textContent = msg;
+    document.getElementById('resultScreen').classList.add('show');
+  }
+
+  function retryQuiz() {
+    score = 0; current = 1; answered = {};
+    for (var i = 1; i <= total; i++) {
+      var q = document.getElementById('q' + i);
+      q.classList.remove('active');
+      q.querySelectorAll('.option').forEach(function(o) {
+        o.disabled = false;
+        o.classList.remove('correct','incorrect','reveal');
+      });
+      document.getElementById('exp' + i).classList.remove('show');
+      document.getElementById('next' + i).classList.remove('show');
+    }
+    document.getElementById('resultScreen').classList.remove('show');
+    document.getElementById('q1').classList.add('active');
+    document.getElementById('progressBar').style.width = '0%';
+  }
+</script>
+</body>
+</html>
