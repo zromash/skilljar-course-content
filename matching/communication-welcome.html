@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communication Overview — Matching</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 18px; }
+
+  .match-area { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #718096; margin-bottom: 8px; }
+
+  .item {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+  }
+  .item:hover { border-color: #1A6AFF; }
+  .item.selected { border-color: #1A6AFF; background: #eef3ff; }
+  .item.matched { border-color: #38a169; background: #f0fff4; cursor: default; color: #276749; }
+  .item.wrong { border-color: #e53e3e; background: #fff5f5; }
+
+  .definition {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #2d3748;
+    cursor: pointer;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+  }
+  .definition:hover { border-color: #1A6AFF; }
+  .definition.selected { border-color: #1A6AFF; background: #eef3ff; }
+  .definition.matched { border-color: #38a169; background: #f0fff4; cursor: default; color: #276749; }
+  .definition.wrong { border-color: #e53e3e; background: #fff5f5; }
+
+  .status { font-size: 12px; color: #718096; margin-top: 14px; text-align: center; }
+  .success { background: #f0fff4; border: 1px solid #38a169; border-radius: 8px; padding: 12px 16px; margin-top: 14px; display: none; }
+  .success p { font-size: 13px; color: #276749; text-align: center; font-weight: 700; }
+  .reset-btn { display: none; background: none; border: 1px solid #1A6AFF; color: #1A6AFF; border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; margin: 10px auto 0; }
+  .reset-btn:hover { background: #1A6AFF; color: white; }
+</style>
+</head>
+<body>
+  <h2>Matching Activity</h2>
+  <p class="sub">Select a feature on the left, then select its matching description on the right.</p>
+
+  <div class="match-area">
+    <div>
+      <div class="col-label">Feature</div>
+      <div class="item" data-id="blast" onclick="selectLeft(this)">Message Blast</div>
+      <div class="item" data-id="convo" onclick="selectLeft(this)">Conversation</div>
+      <div class="item" data-id="group" onclick="selectLeft(this)">Group Chat</div>
+      <div class="item" data-id="history" onclick="selectLeft(this)">Message History</div>
+    </div>
+    <div>
+      <div class="col-label">What it does</div>
+      <div class="definition" data-id="group" onclick="selectRight(this)">A shared thread where all members can see and respond to each other's messages.</div>
+      <div class="definition" data-id="history" onclick="selectRight(this)">Shows who has read your sent blasts — track engagement and accountability.</div>
+      <div class="definition" data-id="blast" onclick="selectRight(this)">Send one message to many recipients at once. They can't see who else received it.</div>
+      <div class="definition" data-id="convo" onclick="selectRight(this)">A private 1:1 message thread between two users.</div>
+    </div>
+  </div>
+
+  <div class="status" id="status">0 of 4 matched</div>
+  <div class="success" id="success"><p>✓ All matched! You know your communication tools.</p></div>
+  <div style="text-align:center"><button class="reset-btn" id="reset-btn" onclick="resetAll()">Try again</button></div>
+
+<script>
+  var selectedLeft = null;
+  var matched = 0;
+
+  function selectLeft(el) {
+    if (el.classList.contains('matched')) return;
+    document.querySelectorAll('.item.selected').forEach(function(i) { i.classList.remove('selected'); });
+    selectedLeft = el;
+    el.classList.add('selected');
+    document.querySelectorAll('.definition.selected').forEach(function(i) { i.classList.remove('selected'); });
+  }
+
+  function selectRight(el) {
+    if (el.classList.contains('matched')) return;
+    if (!selectedLeft) {
+      el.classList.add('selected');
+      setTimeout(function() { el.classList.remove('selected'); }, 400);
+      return;
+    }
+    if (selectedLeft.dataset.id === el.dataset.id) {
+      selectedLeft.classList.remove('selected');
+      selectedLeft.classList.add('matched');
+      el.classList.add('matched');
+      selectedLeft = null;
+      matched++;
+      document.getElementById('status').textContent = matched + ' of 4 matched';
+      if (matched === 4) {
+        document.getElementById('success').style.display = 'block';
+        document.getElementById('reset-btn').style.display = 'block';
+        document.getElementById('status').style.display = 'none';
+      }
+    } else {
+      selectedLeft.classList.add('wrong');
+      el.classList.add('wrong');
+      var left = selectedLeft;
+      setTimeout(function() {
+        left.classList.remove('wrong', 'selected');
+        el.classList.remove('wrong', 'selected');
+      }, 600);
+      selectedLeft = null;
+    }
+  }
+
+  function resetAll() {
+    matched = 0;
+    selectedLeft = null;
+    document.querySelectorAll('.item, .definition').forEach(function(el) {
+      el.classList.remove('matched', 'selected', 'wrong');
+    });
+    document.getElementById('success').style.display = 'none';
+    document.getElementById('reset-btn').style.display = 'none';
+    document.getElementById('status').style.display = 'block';
+    document.getElementById('status').textContent = '0 of 4 matched';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Message Blasts (Web) — Checklist Simulator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 18px; }
+
+  .scenario-box { background: #eef3ff; border: 1px solid #c3d4ff; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+  .scenario-box p { font-size: 13px; color: #1a1a2e; line-height: 1.6; }
+  .scenario-box strong { color: #1A6AFF; }
+
+  .step-item { display: flex; align-items: flex-start; gap: 12px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .step-item:hover { border-color: #1A6AFF; }
+  .step-item.done { background: #f0fff4; border-color: #38a169; cursor: default; }
+  .step-item.done .step-text { color: #276749; }
+  .step-item.done .step-text strong { color: #276749; }
+
+  .checkbox { width: 22px; height: 22px; border: 2px solid #cbd5e0; border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.2s; }
+  .step-item.done .checkbox { background: #38a169; border-color: #38a169; }
+  .checkmark { display: none; color: white; font-size: 13px; font-weight: 700; }
+  .step-item.done .checkmark { display: block; }
+
+  .step-text { font-size: 13px; color: #2d3748; line-height: 1.6; }
+  .step-text strong { color: #1a1a2e; }
+  .step-num { font-size: 11px; font-weight: 700; color: #718096; display: block; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .progress-bar-wrap { background: #e2e8f0; border-radius: 999px; height: 6px; margin-bottom: 14px; }
+  .progress-bar { background: #1A6AFF; border-radius: 999px; height: 6px; transition: width 0.4s; }
+
+  .success { background: #f0fff4; border: 1px solid #38a169; border-radius: 8px; padding: 12px 16px; margin-top: 4px; display: none; }
+  .success p { font-size: 13px; color: #276749; line-height: 1.5; font-weight: 700; text-align: center; }
+  .reset-btn { display: none; background: none; border: 1px solid #1A6AFF; color: #1A6AFF; border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; margin: 10px auto 0; }
+  .reset-btn:hover { background: #1A6AFF; color: white; }
+</style>
+</head>
+<body>
+  <h2>Checklist Simulator</h2>
+  <p class="sub">Walk through sending a message blast on web. Check off each step as you go.</p>
+
+  <div class="scenario-box">
+    <p><strong>Scenario:</strong> You need to remind your entire roster about tomorrow's 7am practice. Send a message blast to the full team from your desktop.</p>
+  </div>
+
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress" style="width:0%"></div></div>
+
+  <div class="step-item" onclick="check(this, 0)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 1</span>Navigate to the <strong>Messages</strong> module in Hub.</div>
+  </div>
+  <div class="step-item" onclick="check(this, 1)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 2</span>Select <strong>New Message Blast</strong> in the top right.</div>
+  </div>
+  <div class="step-item" onclick="check(this, 2)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 3</span>Choose your message type — <strong>Teamworks Message</strong> or <strong>Email</strong>.</div>
+  </div>
+  <div class="step-item" onclick="check(this, 3)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 4</span>Add your <strong>recipients</strong> — select a team, group, or individual users.</div>
+  </div>
+  <div class="step-item" onclick="check(this, 4)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 5</span>Compose your message in the text field. Attach a file if needed.</div>
+  </div>
+  <div class="step-item" onclick="check(this, 5)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 6</span>Optionally, set a <strong>scheduled send time</strong> for a future date and time.</div>
+  </div>
+  <div class="step-item" onclick="check(this, 6)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 7</span>Review everything and select <strong>Send</strong> — your blast goes out to all recipients.</div>
+  </div>
+
+  <div class="success" id="success"><p>✓ Blast sent! Your team will receive a push notification immediately.</p></div>
+  <div style="text-align:center"><button class="reset-btn" id="reset-btn" onclick="resetAll()">Try again</button></div>
+
+<script>
+  var checked = [false,false,false,false,false,false,false];
+  var total = 7;
+
+  function check(el, idx) {
+    if (el.classList.contains('done')) return;
+    el.classList.add('done');
+    checked[idx] = true;
+    var count = checked.filter(Boolean).length;
+    document.getElementById('progress').style.width = (count / total * 100) + '%';
+    if (count === total) {
+      document.getElementById('success').style.display = 'block';
+      document.getElementById('reset-btn').style.display = 'block';
+    }
+  }
+
+  function resetAll() {
+    checked = [false,false,false,false,false,false,false];
+    document.querySelectorAll('.step-item').forEach(function(el) { el.classList.remove('done'); });
+    document.getElementById('progress').style.width = '0%';
+    document.getElementById('success').style.display = 'none';
+    document.getElementById('reset-btn').style.display = 'none';
+  }
+</script>
+</body>
+</html>
