@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Files on Mobile — Scenario Slider</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 18px; }
+
+  .scenario-box { background: #eef3ff; border: 1px solid #c3d4ff; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+  .scenario-box p { font-size: 13px; color: #1a1a2e; line-height: 1.6; }
+  .scenario-box strong { color: #1A6AFF; }
+
+  .slider-wrap { position: relative; overflow: hidden; }
+  .slider-track { display: flex; transition: transform 0.4s ease; }
+  .slide { min-width: 100%; }
+
+  .slide-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; }
+  .slide-step { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1A6AFF; margin-bottom: 8px; }
+  .slide-action { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .slide-result { font-size: 13px; color: #2d3748; line-height: 1.6; background: #f8fafc; border-left: 3px solid #1A6AFF; padding: 10px 12px; border-radius: 0 6px 6px 0; margin-top: 10px; }
+  .slide-result strong { color: #1A6AFF; }
+
+  .success-card { background: #f0fff4; border: 1px solid #38a169; border-radius: 10px; padding: 20px; text-align: center; }
+  .success-card p { font-size: 13px; color: #276749; line-height: 1.6; font-weight: 700; }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+  .nav-btn { background: #1A6AFF; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer; transition: background 0.2s; }
+  .nav-btn:hover { background: #1558d6; }
+  .nav-btn:disabled { background: #e2e8f0; color: #a0aec0; cursor: default; }
+  .nav-btn.ghost { background: none; border: 1px solid #1A6AFF; color: #1A6AFF; }
+  .nav-btn.ghost:hover { background: #1A6AFF; color: white; }
+
+  .progress-dots { display: flex; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #e2e8f0; transition: background 0.2s; }
+  .dot.active { background: #1A6AFF; }
+  .dot.done { background: #38a169; }
+</style>
+</head>
+<body>
+  <h2>Scenario Slider</h2>
+  <p class="sub">Walk through creating a folder and uploading a file from the Hub mobile app.</p>
+
+  <div class="scenario-box">
+    <p><strong>Scenario:</strong> You're away from your desk and need to create a new folder for your team and upload a document from your phone. Walk through how to do it entirely from the Hub mobile app.</p>
+  </div>
+
+  <div class="slider-wrap">
+    <div class="slider-track" id="track">
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 1 of 5</div>
+          <div class="slide-action">Access the Files section from the bottom bar.</div>
+          <div class="slide-result">Select the <strong>folder icon</strong> on the bottom navigation bar to open Files. Tap the <strong>All tab</strong> for a full view of your folders, then select the team where you want to create the new folder.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 2 of 5</div>
+          <div class="slide-action">Tap the plus icon to create a new folder.</div>
+          <div class="slide-result">Select the <strong>plus icon</strong> and choose to create a new folder. Give it a descriptive name, add optional notes, and decide whether to <strong>pin it</strong> to the top of the list for quick access.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 3 of 5</div>
+          <div class="slide-action">Navigate into the folder and tap the plus icon to upload a file.</div>
+          <div class="slide-result">Open the folder you just created, then tap the <strong>plus icon</strong> in the bottom right corner and select <strong>Upload File</strong>. You can take a new photo, upload from your photo library, or select a file from your device.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 4 of 5</div>
+          <div class="slide-action">Configure who can view the file.</div>
+          <div class="slide-result">Set <strong>sharing permissions</strong> based on user type, position, status, year, or custom groups. This controls who on the team will have access to the file once it's uploaded.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 5 of 5</div>
+          <div class="slide-action">Set alert preferences and tap Upload.</div>
+          <div class="slide-result">Choose to <strong>pin the file</strong> to the dashboard, then select your alert preference — email, push notification, both, or none. Tap <strong>Upload</strong> to complete the process and make the file available to your team.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="success-card">
+          <p>✓ Folder created and file uploaded from your phone — all without needing to open a laptop.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn ghost" id="prev-btn" onclick="move(-1)" disabled>← Back</button>
+    <div class="progress-dots" id="dots"></div>
+    <button class="nav-btn" id="next-btn" onclick="move(1)">Next →</button>
+  </div>
+
+<script>
+  var current = 0;
+  var total = 6;
+  var dotsEl = document.getElementById('dots');
+  for (var i = 0; i < total; i++) {
+    var d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    dotsEl.appendChild(d);
+  }
+  function move(dir) {
+    current += dir;
+    if (current < 0) current = 0;
+    if (current >= total) current = total - 1;
+    document.getElementById('track').style.transform = 'translateX(-' + (current * 100) + '%)';
+    document.getElementById('prev-btn').disabled = current === 0;
+    document.getElementById('next-btn').disabled = current === total - 1;
+    document.querySelectorAll('.dot').forEach(function(d, i) {
+      d.className = 'dot' + (i < current ? ' done' : i === current ? ' active' : '');
+    });
+  }
+</script>
+</body>
+</html>
