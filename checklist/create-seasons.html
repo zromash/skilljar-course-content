@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Seasons — Checklist Simulator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 16px; }
+
+  .scenario-box { background: #eef3ff; border: 1px solid #c3d4ff; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+  .scenario-box p { font-size: 13px; color: #1a1a2e; line-height: 1.6; }
+  .scenario-box strong { color: #1A6AFF; }
+
+  .progress-bar-wrap { background: #e2e8f0; border-radius: 99px; height: 6px; margin-bottom: 14px; overflow: hidden; }
+  .progress-bar { background: #1A6AFF; height: 6px; border-radius: 99px; transition: width 0.4s ease; }
+
+  .step-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .step-item:hover:not(.done) { border-color: #1A6AFF; background: #fafcff; }
+  .step-item.done { background: #f0fff4; border-color: #38a169; cursor: default; }
+  .step-item.active { border-color: #1A6AFF; background: #fafcff; }
+
+  .step-check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #cbd5e0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: all 0.2s; }
+  .step-item.done .step-check { background: #38a169; border-color: #38a169; color: white; font-size: 13px; font-weight: bold; }
+  .step-item.active .step-check { border-color: #1A6AFF; }
+
+  .step-content { flex: 1; }
+  .step-label { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 3px; }
+  .step-item.done .step-label { color: #276749; }
+  .step-detail { font-size: 12px; color: #718096; line-height: 1.5; display: none; }
+  .step-item.active .step-detail { display: block; color: #4a5568; }
+  .step-item.done .step-detail { display: block; color: #276749; }
+
+  .step-btn { background: #1A6AFF; color: white; border: none; border-radius: 7px; padding: 8px 16px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+  .step-btn:hover { background: #1558d6; }
+
+  .success { background: #f0fff4; border: 1px solid #38a169; border-radius: 10px; padding: 16px; margin-top: 14px; display: none; text-align: center; }
+  .success p { font-size: 13px; color: #276749; font-weight: 700; line-height: 1.6; }
+  .reset-btn { background: none; border: 1px solid #1A6AFF; color: #1A6AFF; border-radius: 7px; padding: 8px 16px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 10px; }
+  .reset-btn:hover { background: #1A6AFF; color: white; }
+  .count { font-size: 11px; color: #718096; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+  <h2>Checklist Simulator</h2>
+  <p class="sub">Work through each step to create a season in Hub.</p>
+
+  <div class="scenario-box">
+    <p><strong>Scenario:</strong> Your athletic department is starting a new travel season for football. Walk through setting it up in Hub so your team has an organized framework for all upcoming trips.</p>
+  </div>
+
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress" style="width:0%"></div></div>
+  <p class="count" id="count">0 of 6 steps completed</p>
+
+  <div id="steps">
+    <div class="step-item active" id="s0">
+      <div class="step-check" id="c0"></div>
+      <div class="step-content">
+        <div class="step-label">Navigate to Travel → Trips → Manage Seasons</div>
+        <div class="step-detail">Find the Travel module in the left menu bar, select Trips, then click Manage Seasons to see your existing seasons and access the creation tools.<br><button class="step-btn" onclick="complete(0)">Done ✓</button></div>
+      </div>
+    </div>
+    <div class="step-item" id="s1">
+      <div class="step-check" id="c1"></div>
+      <div class="step-content">
+        <div class="step-label">Review existing seasons</div>
+        <div class="step-detail">You can rename any existing season by selecting Edit, making your changes, and hitting Save. This is useful when season names need to be updated.<br><button class="step-btn" onclick="complete(1)">Done ✓</button></div>
+      </div>
+    </div>
+    <div class="step-item" id="s2">
+      <div class="step-check" id="c2"></div>
+      <div class="step-content">
+        <div class="step-label">Click "+ Add Season"</div>
+        <div class="step-detail">The Add Season button opens the season creation form. This is where you'll name the new season and tie it to the correct team.<br><button class="step-btn" onclick="complete(2)">Done ✓</button></div>
+      </div>
+    </div>
+    <div class="step-item" id="s3">
+      <div class="step-check" id="c3"></div>
+      <div class="step-content">
+        <div class="step-label">Select the correct team from the dropdown</div>
+        <div class="step-detail">Each season is tied to a specific team. Make sure you're selecting the right team — you'll add all trips for that team under this season.<br><button class="step-btn" onclick="complete(3)">Done ✓</button></div>
+      </div>
+    </div>
+    <div class="step-item" id="s4">
+      <div class="step-check" id="c4"></div>
+      <div class="step-content">
+        <div class="step-label">Enter a descriptive name for the season</div>
+        <div class="step-detail">Use a clear naming convention — for example "Football 2025-26" or "Fall Travel Season." This name will appear across all trips associated with it.<br><button class="step-btn" onclick="complete(4)">Done ✓</button></div>
+      </div>
+    </div>
+    <div class="step-item" id="s5">
+      <div class="step-check" id="c5"></div>
+      <div class="step-content">
+        <div class="step-label">Click Save to create the season</div>
+        <div class="step-detail">Your new season immediately appears on the Manage Seasons page and is ready for trips to be added to it.<br><button class="step-btn" onclick="complete(5)">Done ✓</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="success" id="success">
+    <p>✓ Season created! Your football season is now set up as the organizational framework for all upcoming trips. Next step: add your first trip.</p>
+    <br><button class="reset-btn" onclick="reset()">Start over</button>
+  </div>
+
+<script>
+  var done = 0;
+  var total = 6;
+
+  function complete(i) {
+    var item = document.getElementById('s' + i);
+    var check = document.getElementById('c' + i);
+    if (item.classList.contains('done')) return;
+    item.classList.remove('active');
+    item.classList.add('done');
+    check.textContent = '✓';
+    done++;
+    document.getElementById('count').textContent = done + ' of ' + total + ' steps completed';
+    document.getElementById('progress').style.width = (done / total * 100) + '%';
+    if (i + 1 < total) {
+      document.getElementById('s' + (i + 1)).classList.add('active');
+    }
+    if (done === total) {
+      document.getElementById('success').style.display = 'block';
+    }
+  }
+
+  function reset() {
+    done = 0;
+    document.getElementById('count').textContent = '0 of ' + total + ' steps completed';
+    document.getElementById('progress').style.width = '0%';
+    document.getElementById('success').style.display = 'none';
+    for (var i = 0; i < total; i++) {
+      var item = document.getElementById('s' + i);
+      var check = document.getElementById('c' + i);
+      item.classList.remove('done', 'active');
+      check.textContent = '';
+      if (i === 0) item.classList.add('active');
+    }
+  }
+</script>
+</body>
+</html>
