@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Digital Displays and Create a Theme — Scenario Slider</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 18px; }
+  .scenario-box { background: #eef3ff; border: 1px solid #c3d4ff; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+  .scenario-box p { font-size: 13px; color: #1a1a2e; line-height: 1.6; }
+  .scenario-box strong { color: #1A6AFF; }
+  .slider-wrap { position: relative; overflow: hidden; }
+  .slider-track { display: flex; transition: transform 0.4s ease; }
+  .slide { min-width: 100%; }
+  .slide-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; }
+  .slide-step { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1A6AFF; margin-bottom: 8px; }
+  .slide-action { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .slide-result { font-size: 13px; color: #2d3748; line-height: 1.6; background: #f8fafc; border-left: 3px solid #1A6AFF; padding: 10px 12px; border-radius: 0 6px 6px 0; margin-top: 10px; }
+  .slide-result strong { color: #1A6AFF; }
+  .success-card { background: #f0fff4; border: 1px solid #38a169; border-radius: 10px; padding: 20px; text-align: center; }
+  .success-card p { font-size: 13px; color: #276749; line-height: 1.6; font-weight: 700; }
+  .nav { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+  .nav-btn { background: #1A6AFF; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer; transition: background 0.2s; }
+  .nav-btn:hover { background: #1558d6; }
+  .nav-btn:disabled { background: #e2e8f0; color: #a0aec0; cursor: default; }
+  .nav-btn.ghost { background: none; border: 1px solid #1A6AFF; color: #1A6AFF; }
+  .nav-btn.ghost:hover { background: #1A6AFF; color: white; }
+  .progress-dots { display: flex; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #e2e8f0; transition: background 0.2s; }
+  .dot.active { background: #1A6AFF; }
+  .dot.done { background: #38a169; }
+</style>
+</head>
+<body>
+  <h2>Scenario Slider</h2>
+  <p class="sub">Walk through accessing Digital Displays and creating your first theme.</p>
+
+  <div class="scenario-box">
+    <p><strong>Scenario:</strong> You're setting up Digital Displays for your facility for the first time. Walk through accessing the platform from Hub and creating a branded theme with your organization's colors and logo.</p>
+  </div>
+
+  <div class="slider-wrap">
+    <div class="slider-track" id="track">
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 1 of 5</div>
+          <div class="slide-action">Access Digital Displays from Teamworks Hub.</div>
+          <div class="slide-result">From your Hub dashboard, select the <strong>App Switcher</strong> in the navigation menu, then choose <strong>Digital Displays</strong>. This opens the Digital Displays platform directly from your existing Hub account — no separate login required.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 2 of 5</div>
+          <div class="slide-action">Navigate to Themes and create a new theme.</div>
+          <div class="slide-result">Select <strong>Themes</strong> from the navigation menu and click <strong>New Theme</strong>. The theme configuration panel opens on the right side of the screen — this is where you'll define the visual identity of your displays.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 3 of 5</div>
+          <div class="slide-action">Set the theme name and logo.</div>
+          <div class="slide-result">Enter a name for your theme. For the logo, choose to use your <strong>organization's logo from Hub</strong> or upload a custom one. The preview on the left updates live so you can see exactly how it will look on a display.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 4 of 5</div>
+          <div class="slide-action">Configure colors and theme contrast.</div>
+          <div class="slide-result">Your organization's default colors are pre-filled for background and accent. Click any color box to customize — adjust background, accent, and announcement bar colors independently. Finally, select your <strong>Theme Contrast</strong> level (light or dark) to ensure text is readable against your chosen background.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 5 of 5</div>
+          <div class="slide-action">Review and create the theme.</div>
+          <div class="slide-result">Check the live preview on the left — confirm the colors, logo, and contrast look correct. Click <strong>Create Theme</strong> to save. Your theme appears in the Themes table and can be edited anytime using the pencil icon in its row.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="success-card">
+          <p>✓ Theme created — your organization's visual identity is ready to apply to configurations and displays.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn ghost" id="prev-btn" onclick="move(-1)" disabled>← Back</button>
+    <div class="progress-dots" id="dots"></div>
+    <button class="nav-btn" id="next-btn" onclick="move(1)">Next →</button>
+  </div>
+
+<script>
+  var current = 0, total = 6;
+  var dotsEl = document.getElementById('dots');
+  for (var i = 0; i < total; i++) { var d = document.createElement('div'); d.className = 'dot' + (i === 0 ? ' active' : ''); dotsEl.appendChild(d); }
+  function move(dir) {
+    current += dir;
+    if (current < 0) current = 0;
+    if (current >= total) current = total - 1;
+    document.getElementById('track').style.transform = 'translateX(-' + (current * 100) + '%)';
+    document.getElementById('prev-btn').disabled = current === 0;
+    document.getElementById('next-btn').disabled = current === total - 1;
+    document.querySelectorAll('.dot').forEach(function(d, i) { d.className = 'dot' + (i < current ? ' done' : i === current ? ' active' : ''); });
+  }
+</script>
+</body>
+</html>
