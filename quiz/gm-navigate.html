@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navigating the GM Platform — Quiz</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 18px; }
+  .question-block { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; }
+  .question-text { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; line-height: 1.5; }
+  .option { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 8px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .option:last-of-type { margin-bottom: 0; }
+  .option:hover:not(.locked) { border-color: #1A6AFF; background: #f0f4ff; }
+  .option.selected { border-color: #1A6AFF; background: #eef3ff; }
+  .option.correct { border-color: #38a169; background: #f0fff4; }
+  .option.incorrect { border-color: #e53e3e; background: #fff5f5; }
+  .option-letter { width: 22px; height: 22px; border-radius: 50%; background: #e2e8f0; font-size: 11px; font-weight: 700; color: #718096; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .option.correct .option-letter { background: #38a169; color: white; }
+  .option.incorrect .option-letter { background: #e53e3e; color: white; }
+  .option.selected:not(.correct):not(.incorrect) .option-letter { background: #1A6AFF; color: white; }
+  .option-text { font-size: 13px; color: #2d3748; line-height: 1.5; }
+  .feedback { font-size: 12px; margin-top: 10px; padding: 8px 12px; border-radius: 6px; display: none; line-height: 1.5; }
+  .feedback.correct { background: #f0fff4; color: #276749; display: block; }
+  .feedback.incorrect { background: #fff5f5; color: #c53030; display: block; }
+  .check-btn { margin-top: 12px; background: #1A6AFF; color: white; border: none; border-radius: 8px; padding: 9px 20px; font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer; transition: background 0.2s; }
+  .check-btn:hover { background: #1558d6; }
+  .check-btn:disabled { background: #e2e8f0; color: #a0aec0; cursor: default; }
+  .score-bar { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin-top: 4px; display: none; text-align: center; }
+  .score-bar p { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
+  .score-bar .sub-score { font-size: 12px; color: #718096; }
+  .retry-btn { margin-top: 10px; background: none; border: 1px solid #1A6AFF; color: #1A6AFF; border-radius: 7px; padding: 7px 16px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; }
+  .retry-btn:hover { background: #1A6AFF; color: white; }
+</style>
+</head>
+<body>
+  <h2>Knowledge Check</h2>
+  <p class="sub">Test what you know about navigating the GM platform.</p>
+
+  <!-- Q1 -->
+  <div class="question-block" id="q0">
+    <div class="question-text">Where do you find the link to open General Manager from Teamworks Hub?</div>
+    <div class="option" id="q0o0" onclick="select(0,0)">
+      <div class="option-letter">A</div>
+      <div class="option-text">The Settings menu in your Hub profile</div>
+    </div>
+    <div class="option" id="q0o1" onclick="select(0,1)">
+      <div class="option-letter">B</div>
+      <div class="option-text">The honeycomb-shaped app switcher in the Hub navigation</div>
+    </div>
+    <div class="option" id="q0o2" onclick="select(0,2)">
+      <div class="option-letter">C</div>
+      <div class="option-text">A separate login page at a different URL</div>
+    </div>
+    <div class="feedback" id="q0f"></div>
+    <button class="check-btn" id="q0btn" onclick="check(0)" disabled>Check</button>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-block" id="q1">
+    <div class="question-text">You're a coach with access to one sport. What will you see in the team drop-down at the top of GM?</div>
+    <div class="option" id="q1o0" onclick="select(1,0)">
+      <div class="option-letter">A</div>
+      <div class="option-text">All sports at your institution</div>
+    </div>
+    <div class="option" id="q1o1" onclick="select(1,1)">
+      <div class="option-letter">B</div>
+      <div class="option-text">Only your team</div>
+    </div>
+    <div class="option" id="q1o2" onclick="select(1,2)">
+      <div class="option-letter">C</div>
+      <div class="option-text">A list of all coaches at your institution</div>
+    </div>
+    <div class="feedback" id="q1f"></div>
+    <button class="check-btn" id="q1btn" onclick="check(1)" disabled>Check</button>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-block" id="q2">
+    <div class="question-text">You log into Hub but General Manager doesn't appear in the app switcher. What's the most likely reason?</div>
+    <div class="option" id="q2o0" onclick="select(2,0)">
+      <div class="option-letter">A</div>
+      <div class="option-text">Your institution hasn't configured your GM account yet</div>
+    </div>
+    <div class="option" id="q2o1" onclick="select(2,1)">
+      <div class="option-letter">B</div>
+      <div class="option-text">You need to download the GM app separately</div>
+    </div>
+    <div class="option" id="q2o2" onclick="select(2,2)">
+      <div class="option-letter">C</div>
+      <div class="option-text">You must log in from a desktop — GM isn't visible on mobile</div>
+    </div>
+    <div class="feedback" id="q2f"></div>
+    <button class="check-btn" id="q2btn" onclick="check(2)" disabled>Check</button>
+  </div>
+
+  <div class="score-bar" id="scorebar">
+    <p id="score-text"></p>
+    <div class="sub-score" id="score-sub"></div>
+    <button class="retry-btn" onclick="retryAll()">Try again</button>
+  </div>
+
+<script>
+  var answers = [1, 1, 0];
+  var feedback = [
+    ['Not quite — Settings is for account preferences, not app navigation.', 'Correct! The honeycomb app switcher toggles between all Teamworks apps your institution has enabled.', 'Not quite — GM is accessed directly through Hub, no separate login needed.'],
+    ['Not quite — all-sport access is for administrators, not coaches.', 'Correct! As a coach, you only see the team(s) your administrator has granted you access to.', 'Not quite — the drop-down shows teams, not people.'],
+    ['Correct! GM must be configured by your institution\'s administrator before it appears in your app switcher.', 'Not quite — GM is part of Teamworks Hub and doesn\'t require a separate download.', 'Not quite — GM is accessible on any device through Hub. The issue is account configuration.']
+  ];
+  var selected = [null, null, null];
+  var locked = [false, false, false];
+  var score = 0;
+  var answered = 0;
+
+  function select(q, o) {
+    if (locked[q]) return;
+    selected[q] = o;
+    for (var i = 0; i < 3; i++) {
+      var el = document.getElementById('q' + q + 'o' + i);
+      el.classList.remove('selected');
+    }
+    document.getElementById('q' + q + 'o' + o).classList.add('selected');
+    document.getElementById('q' + q + 'btn').disabled = false;
+  }
+
+  function check(q) {
+    if (locked[q] || selected[q] === null) return;
+    locked[q] = true;
+    var correct = selected[q] === answers[q];
+    if (correct) score++;
+    answered++;
+    for (var i = 0; i < 3; i++) {
+      var el = document.getElementById('q' + q + 'o' + i);
+      el.classList.remove('selected');
+      if (i === answers[q]) el.classList.add('correct');
+      else if (i === selected[q] && !correct) el.classList.add('incorrect');
+      el.classList.add('locked');
+    }
+    var fb = document.getElementById('q' + q + 'f');
+    fb.textContent = feedback[q][selected[q]];
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    document.getElementById('q' + q + 'btn').disabled = true;
+    if (answered === 3) showScore();
+  }
+
+  function showScore() {
+    var bar = document.getElementById('scorebar');
+    bar.style.display = 'block';
+    document.getElementById('score-text').textContent = score + ' of 3 correct';
+    document.getElementById('score-sub').textContent = score === 3 ? 'Perfect — you\'re ready to navigate GM.' : score === 2 ? 'Good work — review the question you missed before moving on.' : 'Review the video and try again.';
+  }
+
+  function retryAll() {
+    selected = [null, null, null];
+    locked = [false, false, false];
+    score = 0;
+    answered = 0;
+    for (var q = 0; q < 3; q++) {
+      for (var i = 0; i < 3; i++) {
+        var el = document.getElementById('q' + q + 'o' + i);
+        el.className = 'option';
+      }
+      var fb = document.getElementById('q' + q + 'f');
+      fb.className = 'feedback';
+      fb.textContent = '';
+      document.getElementById('q' + q + 'btn').disabled = true;
+    }
+    document.getElementById('scorebar').style.display = 'none';
+  }
+</script>
+</body>
+</html>

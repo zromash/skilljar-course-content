@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managing Athlete Positions — Flip Cards</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 18px; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card-wrap { perspective: 800px; height: 180px; cursor: pointer; }
+  .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.5s ease; border-radius: 10px; }
+  .card-wrap.flipped .card { transform: rotateY(180deg); }
+  .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: center; }
+  .front { background: #fff; border: 1px solid #e2e8f0; }
+  .back { background: #1A6AFF; color: white; transform: rotateY(180deg); }
+  .card-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1A6AFF; margin-bottom: 8px; }
+  .back .card-tag { color: rgba(255,255,255,0.7); }
+  .card-title { font-size: 13px; font-weight: 700; color: #1a1a2e; line-height: 1.4; }
+  .back .card-title { color: white; font-size: 12px; font-weight: 400; line-height: 1.6; }
+  .flip-hint { font-size: 10px; color: #a0aec0; margin-top: 10px; }
+  .progress { font-size: 11px; color: #718096; margin-top: 14px; text-align: center; }
+  .reset-btn { display: block; margin: 10px auto 0; background: none; border: 1px solid #1A6AFF; color: #1A6AFF; border-radius: 7px; padding: 7px 16px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; }
+  .reset-btn:hover { background: #1A6AFF; color: white; }
+</style>
+</head>
+<body>
+  <h2>Flip Cards</h2>
+  <p class="sub">Click each card to learn how athlete positions work in GM.</p>
+
+  <div class="cards">
+
+    <div class="card-wrap" id="card0" onclick="flip(0)">
+      <div class="card">
+        <div class="front">
+          <div class="card-tag">Concept 1</div>
+          <div class="card-title">Hub Position vs Custom Position</div>
+          <div class="flip-hint">Click to learn →</div>
+        </div>
+        <div class="back">
+          <div class="card-tag">What's the difference?</div>
+          <div class="card-title">Hub positions sync automatically from Teamworks Hub. Custom positions are created inside GM to match your unique team structure — and they persist across academic years.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrap" id="card1" onclick="flip(1)">
+      <div class="card">
+        <div class="front">
+          <div class="card-tag">Concept 2</div>
+          <div class="card-title">How to change an athlete's position</div>
+          <div class="flip-hint">Click to learn →</div>
+        </div>
+        <div class="back">
+          <div class="card-tag">The steps</div>
+          <div class="card-title">Select the athlete from the roster table → open the side panel → click the position field → choose from the Hub list or type a new name and select Create → click Change Position.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrap" id="card2" onclick="flip(2)">
+      <div class="card">
+        <div class="front">
+          <div class="card-tag">Concept 3</div>
+          <div class="card-title">Apply to current year vs all upcoming years</div>
+          <div class="flip-hint">Click to learn →</div>
+        </div>
+        <div class="back">
+          <div class="card-tag">When to use each</div>
+          <div class="card-title">Choose "current year only" for a temporary adjustment. Choose "all upcoming years" when the position change reflects your long-term roster structure for that athlete.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrap" id="card3" onclick="flip(3)">
+      <div class="card">
+        <div class="front">
+          <div class="card-tag">Concept 4</div>
+          <div class="card-title">Does changing a position in GM affect Hub?</div>
+          <div class="flip-hint">Click to learn →</div>
+        </div>
+        <div class="back">
+          <div class="card-tag">Important to know</div>
+          <div class="card-title">No — changing an athlete's position in GM (especially to a custom position) does not update their listed position in Teamworks Hub. The two systems are independent for position data.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="progress" id="progress">0 of 4 flipped</p>
+  <button class="reset-btn" id="reset-btn" onclick="resetAll()" style="display:none">Flip back</button>
+
+<script>
+  var flipped = [];
+  function flip(i) {
+    var el = document.getElementById('card' + i);
+    if (el.classList.contains('flipped')) return;
+    el.classList.add('flipped');
+    if (flipped.indexOf(i) === -1) flipped.push(i);
+    document.getElementById('progress').textContent = flipped.length + ' of 4 flipped';
+    if (flipped.length === 4) document.getElementById('reset-btn').style.display = 'block';
+  }
+  function resetAll() {
+    for (var i = 0; i < 4; i++) document.getElementById('card' + i).classList.remove('flipped');
+    flipped = [];
+    document.getElementById('progress').textContent = '0 of 4 flipped';
+    document.getElementById('reset-btn').style.display = 'none';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creating a Budget — Scenario Slider</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 18px; }
+  .scenario-box { background: #eef3ff; border: 1px solid #c3d4ff; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+  .scenario-box p { font-size: 13px; color: #1a1a2e; line-height: 1.6; }
+  .scenario-box strong { color: #1A6AFF; }
+  .slider-wrap { position: relative; overflow: hidden; }
+  .slider-track { display: flex; transition: transform 0.4s ease; }
+  .slide { min-width: 100%; }
+  .slide-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; }
+  .slide-step { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1A6AFF; margin-bottom: 8px; }
+  .slide-action { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .slide-result { font-size: 13px; color: #2d3748; line-height: 1.6; background: #f8fafc; border-left: 3px solid #1A6AFF; padding: 10px 12px; border-radius: 0 6px 6px 0; margin-top: 10px; }
+  .slide-result strong { color: #1A6AFF; }
+  .success-card { background: #f0fff4; border: 1px solid #38a169; border-radius: 10px; padding: 20px; text-align: center; }
+  .success-card p { font-size: 13px; color: #276749; line-height: 1.6; font-weight: 700; }
+  .nav { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+  .nav-btn { background: #1A6AFF; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 700; font-family: inherit; cursor: pointer; transition: background 0.2s; }
+  .nav-btn:hover { background: #1558d6; }
+  .nav-btn:disabled { background: #e2e8f0; color: #a0aec0; cursor: default; }
+  .nav-btn.ghost { background: none; border: 1px solid #1A6AFF; color: #1A6AFF; }
+  .nav-btn.ghost:hover { background: #1A6AFF; color: white; }
+  .progress-dots { display: flex; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #e2e8f0; transition: background 0.2s; }
+  .dot.active { background: #1A6AFF; }
+  .dot.done { background: #38a169; }
+</style>
+</head>
+<body>
+  <h2>Scenario Slider</h2>
+  <p class="sub">Walk through building a new budget in General Manager from start to finish.</p>
+
+  <div class="scenario-box">
+    <p><strong>Scenario:</strong> You're setting up a multi-year scholarship budget for your program. Walk through creating the budget, configuring your NIL values, adding categories, and getting it ready to allocate dollars to athletes.</p>
+  </div>
+
+  <div class="slider-wrap">
+    <div class="slider-track" id="track">
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 1 of 6</div>
+          <div class="slide-action">Go to Budgets and click New Budget.</div>
+          <div class="slide-result">From the GM navigation, select <strong>Budgets</strong>, then click <strong>New Budget</strong>. Enter a budget name and a start date. Choose whether this is a single-year budget or a <strong>multi-year budget</strong> — multi-year lets you view athlete commitments side by side across academic years.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 2 of 6</div>
+          <div class="slide-action">Enter your NIL values.</div>
+          <div class="slide-result">Your sport auto-populates based on your account. Enter the values for <strong>institutional NIL scholarships</strong> and <strong>third-party NIL</strong>. These define the total resources available in this budget. Click <strong>Create Budget</strong> to save — you can edit these values at any time.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 3 of 6</div>
+          <div class="slide-action">Set the budget status to Active.</div>
+          <div class="slide-result">After the budget is created, set its status to <strong>Active</strong>. This signals that the budget is live and you're ready to begin committing dollars from it to athletes. A budget can remain in draft status while you're still configuring it.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 4 of 6</div>
+          <div class="slide-action">Add categories to organize your budget.</div>
+          <div class="slide-result">Categories work like columns in a spreadsheet. Click <strong>Add Category</strong>, give it a name (e.g. "Tuition", "Room & Board"), and decide whether it spans multiple years in a multi-year budget. Each category can be set to include or exclude from the overall budget total.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 5 of 6</div>
+          <div class="slide-action">Use the Filter tab to view a single academic year.</div>
+          <div class="slide-result">In a multi-year budget, the <strong>Filter tab</strong> lets you narrow the view to a single academic year — useful when you want to focus on one year's allocation without seeing the full multi-year breakdown.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="slide-card">
+          <div class="slide-step">Step 6 of 6</div>
+          <div class="slide-action">Begin allocating dollars to athletes.</div>
+          <div class="slide-result">With categories set up and the budget Active, you're ready to allocate. Select an athlete in the budget and enter dollar amounts per category. You can allocate to current roster members, or import recruits from C+R to model commitment scenarios.</div>
+        </div>
+      </div>
+
+      <div class="slide">
+        <div class="success-card">
+          <p>✓ Budget created and ready — categories configured and dollars can now be allocated to athletes.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn ghost" id="prev-btn" onclick="move(-1)" disabled>← Back</button>
+    <div class="progress-dots" id="dots"></div>
+    <button class="nav-btn" id="next-btn" onclick="move(1)">Next →</button>
+  </div>
+
+<script>
+  var current = 0, total = 7;
+  var dotsEl = document.getElementById('dots');
+  for (var i = 0; i < total; i++) { var d = document.createElement('div'); d.className = 'dot' + (i === 0 ? ' active' : ''); dotsEl.appendChild(d); }
+  function move(dir) {
+    current += dir;
+    if (current < 0) current = 0;
+    if (current >= total) current = total - 1;
+    document.getElementById('track').style.transform = 'translateX(-' + (current * 100) + '%)';
+    document.getElementById('prev-btn').disabled = current === 0;
+    document.getElementById('next-btn').disabled = current === total - 1;
+    document.querySelectorAll('.dot').forEach(function(d, i) { d.className = 'dot' + (i < current ? ' done' : i === current ? ' active' : ''); });
+  }
+</script>
+</body>
+</html>
