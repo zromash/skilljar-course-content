@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set Up Your Profile — Knowledge Check</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { perspective: 1000px; height: 170px; cursor: pointer; }
+  .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+  .card.flipped .card-inner { transform: rotateY(180deg); }
+  .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .front { background: #1A6AFF; }
+  .front p { color: white; font-weight: 700; font-size: 13px; text-align: center; line-height: 1.5; }
+  .back { background: #ffffff; border: 2px solid #1A6AFF; transform: rotateY(180deg); }
+  .back p { color: #1a1a2e; font-size: 13px; text-align: center; line-height: 1.5; }
+  .back p strong { color: #1A6AFF; }
+  .hint { font-size: 11px; color: #718096; text-align: center; margin-top: 12px; }
+</style>
+</head>
+<body>
+  <h2>Knowledge Check</h2>
+  <p class="sub">Select each card to flip and reveal the answer.</p>
+  <div class="grid">
+
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>What has to be complete on your staff profile before you can purchase a Twilio number?</p></div>
+        <div class="back"><p>Your <strong>staff type</strong> and <strong>title</strong> fields must be filled in first.</p></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>What does your Twilio number let you send?</p></div>
+        <div class="back"><p><strong>Text Messages (SMS)</strong> — sent and received automatically inside C+R, no personal device required.</p></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>What do you need to do before you can send X (Twitter) DMs to recruits?</p></div>
+        <div class="back"><p>Connect your account using <strong>Social Sync</strong> from your user profile, while logged into X.</p></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="front"><p>Besides Social Sync, what else is required to DM a specific recruit on X?</p></div>
+        <div class="back"><p>You and the recruit must <strong>follow each other</strong> — X requires a bidirectional follow before a DM can send.</p></div>
+      </div>
+    </div>
+
+  </div>
+  <p class="hint">Click again to flip back.</p>
+</body>
+</html>

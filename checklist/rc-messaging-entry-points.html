@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find & Reach Recruits — Checklist Simulator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 18px; }
+
+  .scenario-box { background: #eef3ff; border: 1px solid #c3d4ff; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
+  .scenario-box p { font-size: 13px; color: #1a1a2e; line-height: 1.6; }
+  .scenario-box strong { color: #1A6AFF; }
+
+  .step-item { display: flex; align-items: flex-start; gap: 12px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .step-item:hover { border-color: #1A6AFF; }
+  .step-item.done { background: #f0fff4; border-color: #38a169; cursor: default; }
+  .step-item.done .step-text { color: #276749; }
+  .step-item.done .step-text strong { color: #276749; }
+
+  .checkbox { width: 22px; height: 22px; border: 2px solid #cbd5e0; border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.2s; }
+  .step-item.done .checkbox { background: #38a169; border-color: #38a169; }
+  .checkmark { display: none; color: white; font-size: 13px; font-weight: 700; }
+  .step-item.done .checkmark { display: block; }
+
+  .step-text { font-size: 13px; color: #2d3748; line-height: 1.6; }
+  .step-text strong { color: #1a1a2e; }
+  .step-num { font-size: 11px; font-weight: 700; color: #718096; display: block; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .progress-bar-wrap { background: #e2e8f0; border-radius: 999px; height: 6px; margin-bottom: 14px; }
+  .progress-bar { background: #1A6AFF; border-radius: 999px; height: 6px; transition: width 0.4s; }
+
+  .success { background: #f0fff4; border: 1px solid #38a169; border-radius: 8px; padding: 12px 16px; margin-top: 4px; display: none; }
+  .success p { font-size: 13px; color: #276749; line-height: 1.5; font-weight: 700; text-align: center; }
+  .reset-btn { display: none; background: none; border: 1px solid #1A6AFF; color: #1A6AFF; border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; margin: 10px auto 0; }
+  .reset-btn:hover { background: #1A6AFF; color: white; }
+</style>
+</head>
+<body>
+  <h2>Checklist Simulator</h2>
+  <p class="sub">Recruit Messaging can be started from more places than you'd think. Check off each entry point as you confirm it.</p>
+
+  <div class="scenario-box">
+    <p><strong>Scenario:</strong> You want to message the 2026 Recruit Board's QBs and WRs, then follow up individually with one recruit later. Find both messaging entry points.</p>
+  </div>
+
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progress" style="width:0%"></div></div>
+
+  <div class="step-item" onclick="check(this, 0)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 1</span>From <strong>Recruit Management</strong>, select recruits and open the <strong>More menu → Send Message</strong>.</div>
+  </div>
+  <div class="step-item" onclick="check(this, 1)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 2</span>From a <strong>Recruiting Board</strong>, filter to QBs and WRs, then message everyone shown — the Board's filters carry into the send.</div>
+  </div>
+  <div class="step-item" onclick="check(this, 2)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 3</span>From <strong>Groups</strong> or <strong>Saved Searches</strong>, select one or more and message every member — editable right in the composer.</div>
+  </div>
+  <div class="step-item" onclick="check(this, 3)">
+    <div class="checkbox"><span class="checkmark">✓</span></div>
+    <div class="step-text"><span class="step-num">Step 4</span>Open the individual recruit's <strong>profile</strong> and click <strong>Messaging</strong> to jump straight into their 1:1 conversation.</div>
+  </div>
+
+  <div class="success" id="success"><p>✓ Recruit Messaging is available from profiles, Boards, Groups, Saved Searches, and Recruit Management — use whichever is fastest for the moment.</p></div>
+  <div style="text-align:center"><button class="reset-btn" id="reset-btn" onclick="resetAll()">Try again</button></div>
+
+<script>
+  var checked = [false,false,false,false];
+  var total = 4;
+
+  function check(el, idx) {
+    if (el.classList.contains('done')) return;
+    el.classList.add('done');
+    checked[idx] = true;
+    var count = checked.filter(Boolean).length;
+    document.getElementById('progress').style.width = (count / total * 100) + '%';
+    if (count === total) {
+      document.getElementById('success').style.display = 'block';
+      document.getElementById('reset-btn').style.display = 'block';
+    }
+  }
+
+  function resetAll() {
+    checked = [false,false,false,false];
+    document.querySelectorAll('.step-item').forEach(function(el) { el.classList.remove('done'); });
+    document.getElementById('progress').style.width = '0%';
+    document.getElementById('success').style.display = 'none';
+    document.getElementById('reset-btn').style.display = 'none';
+  }
+</script>
+</body>
+</html>
