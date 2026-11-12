@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Recruits Matching</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f8fafc; padding: 20px; }
+  h2 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  p.sub { font-size: 12px; color: #718096; margin-bottom: 16px; }
+  .match-area { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #718096; margin-bottom: 8px; }
+  .item, .definition { background: #fff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; font-size: 13px; cursor: pointer; margin-bottom: 8px; transition: border-color 0.2s, background 0.2s; user-select: none; }
+  .item { font-weight: 700; color: #1a1a2e; }
+  .definition { color: #2d3748; line-height: 1.5; }
+  .item:hover, .definition:hover { border-color: #1A6AFF; }
+  .item.selected, .definition.selected { border-color: #1A6AFF; background: #eef3ff; }
+  .item.matched, .definition.matched { border-color: #38a169; background: #f0fff4; cursor: default; color: #276749; }
+  .item.wrong, .definition.wrong { border-color: #e53e3e; background: #fff5f5; }
+  .status { font-size: 12px; color: #718096; margin-top: 14px; text-align: center; }
+  .success { background: #f0fff4; border: 1px solid #38a169; border-radius: 8px; padding: 12px 16px; margin-top: 14px; display: none; }
+  .success p { font-size: 13px; color: #276749; text-align: center; font-weight: 700; }
+  .reset-btn { display: none; background: none; border: 1px solid #1A6AFF; color: #1A6AFF; border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer; margin: 10px auto 0; }
+  .reset-btn:hover { background: #1A6AFF; color: white; }
+  @media (max-width: 520px) { .match-area { grid-template-columns: 1fr; gap: 12px; } }
+</style>
+</head>
+<body>
+  <h2>Matching Activity</h2>
+  <p class="sub">Select an option on the left, then match it to its description on the right.</p>
+
+  <div class="match-area">
+    <div>
+      <div class="col-label">Method</div>
+      <div class="item" data-id="p0" onclick="selectLeft(this)">Manual entry</div>
+      <div class="item" data-id="p1" onclick="selectLeft(this)">Bulk import</div>
+      <div class="item" data-id="p2" onclick="selectLeft(this)">Questionnaire</div>
+      <div class="item" data-id="p3" onclick="selectLeft(this)">Duplicate check</div>
+    </div>
+    <div>
+      <div class="col-label">What it does</div>
+      <div class="definition" data-id="p3" onclick="selectRight(this)">On import, the system compares name and graduation year so existing recruits are not duplicated.</div>
+      <div class="definition" data-id="p0" onclick="selectRight(this)">Quick way to add a single prospect or last-minute addition using the Add New Recruit link.</div>
+      <div class="definition" data-id="p2" onclick="selectRight(this)">Recruits add themselves by submitting your program&#x27;s online form using the URL you share.</div>
+      <div class="definition" data-id="p1" onclick="selectRight(this)">Send a spreadsheet to the Teamworks support team to add many recruits at once, such as at the start of a season.</div>
+    </div>
+  </div>
+
+  <div class="status" id="status">0 of 4 matched</div>
+  <div class="success" id="success"><p>Choose the method that fits the moment. Manual for one, import for many, questionnaire to let recruits do the work.</p></div>
+  <div style="text-align:center"><button class="reset-btn" id="reset-btn" onclick="resetAll()">Try again</button></div>
+
+<script>
+  var selectedLeft = null;
+  var matched = 0;
+  var TOTAL = 4;
+
+  function selectLeft(el) {
+    if (el.classList.contains('matched')) return;
+    document.querySelectorAll('.item.selected').forEach(function(i) { i.classList.remove('selected'); });
+    selectedLeft = el;
+    el.classList.add('selected');
+    document.querySelectorAll('.definition.selected').forEach(function(i) { i.classList.remove('selected'); });
+  }
+
+  function selectRight(el) {
+    if (el.classList.contains('matched')) return;
+    if (!selectedLeft) {
+      el.classList.add('selected');
+      setTimeout(function() { el.classList.remove('selected'); }, 400);
+      return;
+    }
+    if (selectedLeft.dataset.id === el.dataset.id) {
+      selectedLeft.classList.remove('selected');
+      selectedLeft.classList.add('matched');
+      el.classList.add('matched');
+      selectedLeft = null;
+      matched++;
+      document.getElementById('status').textContent = matched + ' of ' + TOTAL + ' matched';
+      if (matched === TOTAL) {
+        document.getElementById('success').style.display = 'block';
+        document.getElementById('reset-btn').style.display = 'block';
+        document.getElementById('status').style.display = 'none';
+      }
+    } else {
+      selectedLeft.classList.add('wrong');
+      el.classList.add('wrong');
+      var left = selectedLeft;
+      setTimeout(function() {
+        left.classList.remove('wrong', 'selected');
+        el.classList.remove('wrong', 'selected');
+      }, 600);
+      selectedLeft = null;
+    }
+  }
+
+  function resetAll() {
+    matched = 0;
+    selectedLeft = null;
+    document.querySelectorAll('.item, .definition').forEach(function(el) {
+      el.classList.remove('matched', 'selected', 'wrong');
+    });
+    document.getElementById('success').style.display = 'none';
+    document.getElementById('reset-btn').style.display = 'none';
+    document.getElementById('status').style.display = 'block';
+    document.getElementById('status').textContent = '0 of ' + TOTAL + ' matched';
+  }
+</script>
+</body>
+</html>
